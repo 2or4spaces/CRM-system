@@ -20,18 +20,6 @@ const routes = [
     component: () => import('../views/AppHome.vue')
   },
   {
-    path: '/categories',
-    name: 'categories',
-    meta: { layout: 'main' },
-    component: () => import('../views/AppCategories.vue')
-  },
-  {
-    path: '/detail/:id',
-    name: 'detail',
-    meta: { layout: 'main' },
-    component: () => import('../views/AppDetail.vue')
-  },
-  {
     path: '/history',
     name: 'history',
     meta: { layout: 'main' },
@@ -44,16 +32,28 @@ const routes = [
     component: () => import('../views/AppPlanning.vue')
   },
   {
-    path: '/profile',
-    name: 'profile',
-    meta: { layout: 'main' },
-    component: () => import('../views/AppProfile.vue')
-  },
-  {
     path: '/record',
     name: 'record',
     meta: { layout: 'main' },
     component: () => import('../views/AppRecord.vue')
+  },
+  {
+    path: '/categories',
+    name: 'categories',
+    meta: { layout: 'main' },
+    component: () => import('../views/AppCategories.vue')
+  },
+  {
+    path: '/detail/:id',
+    name: 'detail',
+    meta: { layout: 'main' },
+    component: () => import('../views/AppDetail.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: { layout: 'main' },
+    component: () => import('../views/AppProfile.vue')
   }
 ]
 
