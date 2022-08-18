@@ -5,11 +5,11 @@ import store from './store'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min.js'
 
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getDatabase } from 'firebase/database'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
 
-const firebaseApp = initializeApp({
+firebase.initializeApp({
   apiKey: 'AIzaSyCbPZ5Ih1kHnj4P07cw9MlfdwZL1q3mWmc',
   authDomain: 'crm-system-roman.firebaseapp.com',
   projectId: 'crm-system-roman',
@@ -18,7 +18,10 @@ const firebaseApp = initializeApp({
   appId: '1:375389201612:web:6250cf8dca17a75555ce69'
 })
 
-const auth = getAuth(firebaseApp)
-const db = getDatabase(firebaseApp)
+let appFirebase
 
-createApp(App).use(store).use(router).mount('#app')
+firebase.auth().onAuthStateChanged(() => {
+  if (!appFirebase) {
+    appFirebase = createApp(App).use(store).use(router).mount('#app')
+  }
+})

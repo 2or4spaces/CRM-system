@@ -41,6 +41,7 @@
         <button
           class="btn waves-effect waves-light auth-submit"
           type="submit"
+          :disabled="!formIsValid"
         >
           Войти
           <i class="material-icons right">send</i>
@@ -70,11 +71,14 @@ export default {
     passwordСheck () {
       const passwordRegExp = /([\w]{5,})/
       return passwordRegExp.test(this.password)
+    },
+    formIsValid () {
+      return this.emailСheck && this.passwordСheck
     }
   },
   methods: {
     async submitHandler () {
-      if (this.emailСheck && this.passwordСheck) {
+      if (this.formIsValid) {
         const formData = {
           email: this.email,
           password: this.password

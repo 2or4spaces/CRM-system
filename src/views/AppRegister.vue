@@ -61,6 +61,7 @@
         <button
           class="btn waves-effect waves-light auth-submit"
           type="submit"
+          :disabled="!formIsValid"
         >
           Зарегистрироваться
           <i class="material-icons right">send</i>
@@ -97,18 +98,25 @@ export default {
     nameСheck () {
       const nameRegExp = /([A-za-z]{4,})/
       return nameRegExp.test(this.name)
+    },
+    formIsValid () {
+      return this.emailСheck && this.passwordСheck && this.nameСheck && this.agree
     }
   },
   methods: {
-    submitHandler () {
-      if (this.emailСheck && this.passwordСheck && this.nameСheck && this.agree) {
-        this.$router.push('/')
+    async submitHandler () {
+      if (this.formIsValid) {
         const formData = {
           email: this.email,
           password: this.password,
           name: this.name
         }
-        console.log(formData)
+        try {
+          await this.$store.dispatch('register', formData)
+          this.$router.push('/')
+        } catch (e) {
+          console.log(e)
+        }
       }
     }
   }
