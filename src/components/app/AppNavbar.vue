@@ -14,7 +14,7 @@
         data-target="dropdown1"
         ref="dropdown"
       >
-      USER NAME
+      {{ name }}
         <i class="material-icons right">arrow_drop_down</i>
       </a>
 
@@ -57,7 +57,9 @@ export default {
     }
   },
   computed: {
-
+    name () {
+      return this.$store.getters.info.name
+    }
   },
   mounted () {
     this.interval = setInterval(() => {

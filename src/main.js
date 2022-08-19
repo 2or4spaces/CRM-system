@@ -5,6 +5,8 @@ import store from './store'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min.js'
 
+import AppLoader from '@/components/app/AppLoader.vue'
+
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
@@ -22,6 +24,10 @@ let appFirebase
 
 firebase.auth().onAuthStateChanged(() => {
   if (!appFirebase) {
-    appFirebase = createApp(App).use(store).use(router).mount('#app')
+    appFirebase = createApp(App)
+      .use(store)
+      .use(router)
+      .component('app-loader', AppLoader)
+      .mount('#app')
   }
 })
