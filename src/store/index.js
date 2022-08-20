@@ -19,6 +19,7 @@ export default createStore({
   },
   actions: {
     async fetchCurrency () {
+      /* Вариант №1. Шаблон, возвращаемый сервером */
       return {
         base: 'EUR',
         date: '2022-08-19',
@@ -29,7 +30,7 @@ export default createStore({
         }
       }
 
-      /* чтобы не превысить 100 запросов / мес
+      /* Вариант №2, чтобы не превысить 100 запросов / мес
       const key = process.env.VUE_APP_FIXER
       const myHeaders = new Headers()
       myHeaders.append('apikey', `${key}`)

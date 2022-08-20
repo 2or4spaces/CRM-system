@@ -3,7 +3,7 @@
     <div class="page-title">
       <h3>Счет</h3>
 
-      <button class="btn waves-effect waves-light btn-small">
+      <button class="btn waves-effect waves-light btn-small" @click="refresh">
         <i class="material-icons">refresh</i>
       </button>
     </div>
@@ -17,7 +17,7 @@
 
       <app-home-currency
         :rates="currency.rates"
-        :date="currency.date" />
+        :date="courseDate" />
 
     </div>
   </div>
@@ -39,8 +39,24 @@ export default {
   },
   async mounted () {
     this.currency = await this.$store.dispatch('fetchCurrency')
-    console.log(this.currency)
     this.loading = false
+  },
+  computed: {
+    courseDate () {
+      const dateOptions = {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      }
+      return Intl.DateTimeFormat('ru-RU', dateOptions).format(new Date(this.currency.date))
+    }
+  },
+  methods: {
+    async refresh () {
+      this.loading = true
+      this.currency = await this.$store.dispatch('fetchCurrency')
+      this.loading = false
+    }
   }
 }
 </script>

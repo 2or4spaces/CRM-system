@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     getCurrency (cur) {
-      const bill = Math.floor(this.base * this.rates[cur])
+      const bill = (this.base * this.rates[cur]).toFixed(2)
       return new Intl.NumberFormat('ru-RU', {
         style: 'currency',
         currency: cur
