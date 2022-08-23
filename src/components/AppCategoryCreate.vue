@@ -35,6 +35,7 @@
           Создать
           <i class="material-icons right">send</i>
         </button>
+        <p class="green-text" v-if="showMessage">Новая категория создана</p>
       </form>
     </div>
   </div>
@@ -47,7 +48,8 @@ export default {
   data () {
     return {
       title: '',
-      limit: ''
+      limit: '',
+      showMessage: false
     }
   },
   computed: {
@@ -65,6 +67,11 @@ export default {
         this.title = ''
         this.limit = ''
         this.$emit('created', category)
+
+        this.showMessage = true
+        setTimeout(() => {
+          this.showMessage = false
+        }, 3000)
       } catch (e) {
         console.log(e)
       }

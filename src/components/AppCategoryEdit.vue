@@ -46,6 +46,7 @@
           Обновить
           <i class="material-icons right">send</i>
         </button>
+        <p class="green-text" v-if="showMessage">Категория успешно изменена</p>
       </form>
     </div>
   </div>
@@ -62,7 +63,8 @@ export default {
     return {
       title: '',
       limit: '',
-      current: null
+      current: null,
+      showMessage: false
     }
   },
   mounted () {

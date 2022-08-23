@@ -78,6 +78,9 @@
         Создать
         <i class="material-icons right">send</i>
       </button>
+      <p :class="{ 'green-text': messageColor, 'red-text': !messageColor }">
+        {{ Message }}
+      </p>
     </form>
   </div>
 </template>
@@ -94,7 +97,9 @@ export default {
       category: null,
       type: 'income',
       amount: '',
-      description: ''
+      description: '',
+      Message: '',
+      messageColor: true
     }
   },
   computed: {
@@ -128,11 +133,21 @@ export default {
           await this.$store.dispatch('updateInfo', { bill })
           this.amount = ''
           this.description = ''
+
+          this.messageColor = true
+          this.Message = 'Новая запись создана'
+          setTimeout(() => {
+            this.Message = ''
+          }, 3000)
         } catch (e) {
           console.log(e)
         }
       } else {
-        return 'Недостаточно средств на счете'
+        this.messageColor = false
+        this.Message = 'Операция не выполнена. Недостаточно средств на счете'
+        setTimeout(() => {
+          this.Message = ''
+        }, 3000)
       }
     }
   },
@@ -145,7 +160,7 @@ export default {
     }
 
     setTimeout(() => {
-      this.select = M.FormSelect.init(this.$refs.select)
+      // this.select = M.FormSelect.init(this.$refs.select)
     }, 0)
   }
 }

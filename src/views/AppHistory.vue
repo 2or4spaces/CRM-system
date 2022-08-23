@@ -8,36 +8,63 @@
       <canvas></canvas>
     </div>
 
-    <section>
-      <table>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Сумма</th>
-          <th>Дата</th>
-          <th>Категория</th>
-          <th>Тип</th>
-          <th>Открыть</th>
-        </tr>
-        </thead>
+    <app-loader v-if="loading" />
 
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1212</td>
-            <td>12.12.32</td>
-            <td>name</td>
-            <td>
-              <span class="white-text badge red">Расход</span>
-            </td>
-            <td>
-              <button class="btn-small btn">
-                <i class="material-icons">open_in_new</i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <h5 class="center" v-else-if="!records.length">У вас пока нет записей.
+      <router-link :to="{ name: 'record' }">Создать новую запись</router-link>
+    </h5>
+
+    <section v-else>
+      <app-history-table
+        :records="records" />
     </section>
   </div>
 </template>
+
+<script>
+import AppHistoryTable from '@/components/AppHistoryTable.vue'
+
+export default {
+  components: {
+    AppHistoryTable
+  },
+  data () {
+    return {
+      loading: true,
+      records: [],
+      categories: []
+    }
+  },
+  async mounted () {
+    const records = await this.$store.dispatch('fetchRecords')
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.records = records.map(record => {
+      return {
+        ...record,
+        amount: new Intl.NumberFormat('ru-RU', {
+          style: 'currency',
+          currency: 'RUB'
+        }).format(record.amount),
+        date: new Intl.DateTimeFormat('ru-RU', {
+          second: '2-digit',
+          minute: '2-digit',
+          hour: '2-digit',
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        }).format(new Date(record.date)),
+        categoryName: this.categories.find(cat => cat.id === record.categoryId).title,
+        typeClass: record.type === 'income' ? 'green' : 'red',
+        typeText: record.type === 'income' ? 'Доход' : 'Расход'
+      }
+    })
+    this.loading = false
+  },
+  computed: {
+
+  },
+  methods: {
+
+  }
+}
+</script>
