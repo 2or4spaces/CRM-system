@@ -16,18 +16,33 @@
 
     <section v-else>
       <app-history-table
-        :records="records" />
+        :records="items" />
+
+      <div class="center">
+        <vue-awesome-paginate
+          :total-items="totalItems"
+          :items-per-page="pageSize"
+          :max-pages-shown="pageCount"
+          :current-page="page"
+          :on-click="pageChangeHandler"
+          :hide-prev-next="true"
+          paginate-buttons-class="pag-btn"
+          active-page-class="pag-btn-active"
+        />
+      </div>
     </section>
   </div>
 </template>
 
 <script>
+import paginationMixin from '@/mixins/pagination.mixin'
 import AppHistoryTable from '@/components/AppHistoryTable.vue'
 
 export default {
   components: {
     AppHistoryTable
   },
+  mixins: [paginationMixin],
   data () {
     return {
       loading: true,
@@ -38,6 +53,7 @@ export default {
   async mounted () {
     const records = await this.$store.dispatch('fetchRecords')
     this.categories = await this.$store.dispatch('fetchCategories')
+
     this.records = records.map(record => {
       return {
         ...record,
@@ -58,6 +74,7 @@ export default {
         typeText: record.type === 'income' ? 'Доход' : 'Расход'
       }
     })
+    this.setupPagination(this.records)
     this.loading = false
   },
   computed: {
@@ -68,3 +85,18 @@ export default {
   }
 }
 </script>
+
+<style>
+  .pag-btn {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin-inline: 5px;
+    cursor: pointer;
+  }
+  .pag-btn-active {
+    background-color: rgb(38, 166, 154);
+  }
+</style>

@@ -7,6 +7,9 @@ import 'materialize-css/dist/js/materialize.min.js'
 
 import AppLoader from '@/components/app/AppLoader.vue'
 
+import VueAwesomePaginate from 'vue-awesome-paginate'
+import 'vue-awesome-paginate/dist/style.css'
+
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
@@ -27,6 +30,7 @@ firebase.auth().onAuthStateChanged(() => {
     appFirebase = createApp(App)
       .use(store)
       .use(router)
+      .use(VueAwesomePaginate)
       .component('app-loader', AppLoader)
       .mount('#app')
   }
