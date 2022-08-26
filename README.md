@@ -6,6 +6,7 @@
 git clone https://github.com/Roman-Prokopchuk/CRM-system.git
 ```
 Или скачайте проект Code / Download ZIP. Разархивируйте и откройте его в своем редакторе кода.
+
 2. Установите используемые npm-пакеты:
 ```
 npm install
