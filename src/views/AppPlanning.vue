@@ -57,7 +57,7 @@ export default {
       const progressPercent = percent > 100 ? 100 : percent
       const progressColor = progressPercent < 60
         ? 'green'
-        : progressPercent < 100
+        : progressPercent < 80
           ? 'yellow'
           : 'red'
 
@@ -79,9 +79,6 @@ export default {
         currency: 'RUB'
       }).format(this.info.bill)
     }
-  },
-  methods: {
-
   }
 }
 </script>

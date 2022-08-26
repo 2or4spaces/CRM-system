@@ -4,10 +4,6 @@
       <h3>История записей</h3>
     </div>
 
-    <div class="history-chart">
-      <canvas></canvas>
-    </div>
-
     <app-loader v-if="loading" />
 
     <h5 class="center" v-else-if="!records.length">У вас пока нет записей.
@@ -15,6 +11,10 @@
     </h5>
 
     <section v-else>
+      <app-pie-chart
+        :records="records"
+        :categories="categories" />
+
       <app-history-table
         :records="items" />
 
@@ -35,12 +35,13 @@
 </template>
 
 <script>
-import paginationMixin from '@/mixins/pagination.mixin'
+import AppPieChart from '@/components/AppPieChart.vue'
 import AppHistoryTable from '@/components/AppHistoryTable.vue'
+import paginationMixin from '@/mixins/pagination.mixin'
 
 export default {
   components: {
-    AppHistoryTable
+    AppPieChart, AppHistoryTable
   },
   mixins: [paginationMixin],
   data () {
@@ -51,37 +52,34 @@ export default {
     }
   },
   async mounted () {
-    const records = await this.$store.dispatch('fetchRecords')
+    this.records = await this.$store.dispatch('fetchRecords')
     this.categories = await this.$store.dispatch('fetchCategories')
-
-    this.records = records.map(record => {
-      return {
-        ...record,
-        amount: new Intl.NumberFormat('ru-RU', {
-          style: 'currency',
-          currency: 'RUB'
-        }).format(record.amount),
-        date: new Intl.DateTimeFormat('ru-RU', {
-          second: '2-digit',
-          minute: '2-digit',
-          hour: '2-digit',
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        }).format(new Date(record.date)),
-        categoryName: this.categories.find(cat => cat.id === record.categoryId).title,
-        typeClass: record.type === 'income' ? 'green' : 'red',
-        typeText: record.type === 'income' ? 'Доход' : 'Расход'
-      }
-    })
-    this.setupPagination(this.records)
+    this.setup()
     this.loading = false
   },
-  computed: {
-
-  },
   methods: {
-
+    setup () {
+      this.setupPagination(this.records.map(record => {
+        return {
+          ...record,
+          amount: new Intl.NumberFormat('ru-RU', {
+            style: 'currency',
+            currency: 'RUB'
+          }).format(record.amount),
+          date: new Intl.DateTimeFormat('ru-RU', {
+            second: '2-digit',
+            minute: '2-digit',
+            hour: '2-digit',
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          }).format(new Date(record.date)),
+          categoryName: this.categories.find(cat => cat.id === record.categoryId).title,
+          typeClass: record.type === 'income' ? 'green' : 'red',
+          typeText: record.type === 'income' ? 'Доход' : 'Расход'
+        }
+      }))
+    }
   }
 }
 </script>

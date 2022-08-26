@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
 export default {
   emits: ['created'],
   data () {

@@ -48,9 +48,6 @@ export default {
       await this.$store.dispatch('fetchInfo')
     }
     this.loading = false
-  },
-  computed: {
-
   }
 }
 

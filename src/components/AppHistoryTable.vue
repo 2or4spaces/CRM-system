@@ -38,27 +38,12 @@
 </template>
 
 <script>
-
 export default {
   props: {
     records: {
       type: Array,
       required: true
     }
-  },
-  data () {
-    return {
-
-    }
-  },
-  mounted () {
-
-  },
-  computed: {
-
-  },
-  methods: {
-
   }
 }
 </script>

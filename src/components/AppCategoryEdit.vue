@@ -46,14 +46,12 @@
           Обновить
           <i class="material-icons right">send</i>
         </button>
-        <p class="green-text" v-if="showMessage">Категория успешно изменена</p>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   emits: ['updated'],
   props: {
@@ -63,12 +61,12 @@ export default {
     return {
       title: '',
       limit: '',
-      current: null,
-      showMessage: false
+      current: null
     }
   },
   mounted () {
-    // this.select = M.FormSelect.init(this.$refs.select)
+    // eslint-disable-next-line
+    this.select = M.FormSelect.init(this.$refs.select)
   },
   computed: {
     categoryIsValid () {
@@ -92,9 +90,7 @@ export default {
         }
         await this.$store.dispatch('updateCategory', categoryData)
         this.$emit('updated', categoryData)
-      } catch (e) {
-        console.log(e)
-      }
+      } catch (e) {}
     }
   }
 }

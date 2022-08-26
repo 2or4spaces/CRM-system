@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar orange lighten-1">
+  <nav class="navbar green lighten-2">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="hide">
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-
 export default {
   emits: {
     hide: null
@@ -73,14 +72,14 @@ export default {
       }
       this.date = Intl.DateTimeFormat('ru-RU', dateOptions).format(new Date())
     }, 1000)
-    /* M.Dropdown.init(this.$refs.dropdown, {
+    // eslint-disable-next-line
+    M.Dropdown.init(this.$refs.dropdown, {
       constrainWidth: false,
       coverTrigger: false
-    }) */
+    })
   },
   beforeUnmount () {
     clearInterval(this.interval)
   }
 }
-
 </script>

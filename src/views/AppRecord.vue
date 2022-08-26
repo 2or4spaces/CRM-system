@@ -139,9 +139,7 @@ export default {
           setTimeout(() => {
             this.Message = ''
           }, 3000)
-        } catch (e) {
-          console.log(e)
-        }
+        } catch (e) {}
       } else {
         this.messageColor = false
         this.Message = 'Операция не выполнена. Недостаточно средств на счете'
@@ -160,7 +158,8 @@ export default {
     }
 
     setTimeout(() => {
-      // this.select = M.FormSelect.init(this.$refs.select)
+      // eslint-disable-next-line
+      this.select = M.FormSelect.init(this.$refs.select)
     }, 0)
   }
 }
